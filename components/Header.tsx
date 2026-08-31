@@ -23,7 +23,7 @@ export default function Header() {
         >
           <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 bg-linear-to-br from-orange-400 to-red-100 rounded-full flex items-center justify-center shadow-lg">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/logo.svg" alt="로고" />
+            <img src="/images/logo.png" alt="로고" />
           </div>
           <h1 className="font-bold text-xl sm:text-2xl bg-linear-to-r from-orange-600 to-red-600 bg-clip-text text-transparent truncate">
             JSChoIog!
