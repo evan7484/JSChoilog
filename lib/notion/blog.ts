@@ -25,7 +25,10 @@ function mapPageToBlogPost(page: any): BlogPost {
 }
 
 // 페이지의 블록 내용을 마크다운으로 변환 (실패 시 fallback 사용)
-async function getPageContent(pageId: string, fallback = ""): Promise<string> {
+export async function getPageContent(
+  pageId: string,
+  fallback = ""
+): Promise<string> {
   try {
     const mdblocks = await n2m.pageToMarkdown(pageId);
     return n2m.toMarkdownString(mdblocks).parent;
@@ -78,14 +81,6 @@ export async function getBlogPostMeta(id: string): Promise<BlogPost | null> {
   }
 }
 
-export async function getBlogPostById(id: string): Promise<BlogPost | null> {
-  const post = await getBlogPostMeta(id);
-  if (!post) return null;
-
-  post.content = await getPageContent(id, post.excerpt);
-  return post;
-}
-
 // 슬러그로 조회 (본문 제외) — Notion DB에 Slug 속성이 없으면 쿼리가 400이므로 null 처리
 export async function getBlogPostMetaBySlug(
   slug: string
@@ -106,14 +101,4 @@ export async function getBlogPostMetaBySlug(
     console.error("Failed to fetch post by slug:", error);
     return null;
   }
-}
-
-export async function getBlogPostBySlug(
-  slug: string
-): Promise<BlogPost | null> {
-  const post = await getBlogPostMetaBySlug(slug);
-  if (!post) return null;
-
-  post.content = await getPageContent(post.id, post.excerpt);
-  return post;
 }
